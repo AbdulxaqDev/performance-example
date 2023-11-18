@@ -1,4 +1,6 @@
 const express = require("express");
+const { open } = require("./chromeOpen");
+const PORT = 3000;
 
 const app = express();
 
@@ -18,4 +20,4 @@ app.get("/timer", (req, res) => {
   res.send("Ring ring ring");
 });
 
-app.listen(3000)
+app.listen(PORT, () => open(`http://localhost:${PORT}/`));
