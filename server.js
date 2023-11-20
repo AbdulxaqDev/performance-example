@@ -1,6 +1,3 @@
-const cluster = require("cluster");
-const cpuLength = require("os").cpus().length;
-
 const express = require("express");
 
 const {open} = require("./openBrowser");
@@ -15,10 +12,6 @@ function delay(duration) {
 }
 
 app.get("/", (req, res) => {
-  // blocking functions
-  // JSON.stringify({}) => "{}"
-  // JSON.parse("{}") => {}
-  // [1,2,3,4,5].sort()
   res.send(`Performance example, ${process.pid}`);
 });
 
@@ -27,14 +20,6 @@ app.get("/timer", (req, res) => {
   res.send(`Ring ring ring, ${process.pid}`);
 });
 
-console.log("Running server.js...");
-if (cluster.isMaster) {
-  console.log("Master has been started...");
-  for (let i = 0; i < cpuLength; i++) {
-    cluster.fork();
-  }
-  open(`http://localhost:${PORT}/timer`)
-} else {
-  console.log("Worker process started", process.pid);
-  app.listen(PORT);
-}
+app.listen(PORT, () => {
+  //open(`http://localhost${PORT}`);
+});
