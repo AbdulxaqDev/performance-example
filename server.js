@@ -1,8 +1,11 @@
-const express = require("express");
 const cluster = require("cluster");
 const cpuLength = require("os").cpus().length;
 
+const express = require("express");
+
+const {open} = require("./openBrowser");
 const app = express();
+
 const PORT = 3000;
 
 function delay(duration) {
@@ -30,6 +33,7 @@ if (cluster.isMaster) {
   for (let i = 0; i < cpuLength; i++) {
     cluster.fork();
   }
+  open(`http://localhost:${PORT}/timer`)
 } else {
   console.log("Worker process started", process.pid);
   app.listen(PORT);
