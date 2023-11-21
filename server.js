@@ -16,7 +16,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/timer", (req, res) => {
-  delay(9000);
+  delay(7000);
   res.send(`Ring ring ring, ${process.pid}`);
 });
 
